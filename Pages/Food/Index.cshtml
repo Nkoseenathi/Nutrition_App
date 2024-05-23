@@ -4,8 +4,47 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h2 class="text-center mb-3">Food list</h2>
 
-<div>
-    
-</div>
+<a class="btn btn-primar mb-3" href="/Food/Create">Add new food</a>
+<table class="table">
+<thead>
+<tr>
+    <th>Food</th>
+    <th>Type</th>
+    <th>Serving</th>
+    <th>Colories</th>
+    <th>Fat</th>
+    <th>Carbs</th>
+    <th>Sugar</th>
+    <th>Protein</th>
+    <th>Vitamin A</th>
+    <th>Vitamin C</th>
+    <th>Iron</th>
+    <th>Action</th>  
+</tr>
+</thead>
+
+<tbody>
+@foreach(var food in Model.foodList){
+    <tr>
+<td>@food.Food</td>
+<td>@food.Food_Type</td>
+<td>@food.Serving</td>
+<td>@food.Calories</td>
+<td>@food.Total_Fat</td>
+<td>@food.Total_Carbo_hydrate</td>
+<td>@food.Sugars</td>
+<td>@food.Protein</td> 
+<td>@food.Vitamin_A</td>
+<td>@food.Vitamin_C</td>
+<td>@food.Iron</td>
+<td style="white-space:nowrap">
+<a class="btn btn-primary btn-sm" href="/Food/edit?name=@food.Food">Edit</a>
+<a class="btn btn-danger btn-sm " href="/Food/delete?name=@food.Food">Delete</a>
+<td>
+    </tr>
+}
+</tbody>
+
+</table>

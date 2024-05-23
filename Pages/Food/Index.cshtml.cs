@@ -17,8 +17,8 @@ namespace Nutrition_App.Pages.Food
         {
             try
             {
-                string connString = "Server=.;Database=nutrition;Trusted_Connection=True;TrustSeverCertificate=True;";
-                using (SqlConnection connection = new SqlConnection(connString))
+                string connString = "Server=.;Database=nutrition;Trusted_Connection=True;TrustServerCertificate=True;";
+                using (SqlConnection connection = new SqlConnection(connString))         
                 {
 
                     connection.Open();
@@ -30,16 +30,21 @@ namespace Nutrition_App.Pages.Food
                                 NutritionalInfo nutritionInfo= new NutritionalInfo();
                                 String[] temp= reader.GetString(0).Split(",");
                                 nutritionInfo.Food = temp[0];
-                                nutritionInfo.Serving = temp[1];
-                                nutritionInfo.Calories = reader.GetInt32(1);
+                                if (temp.Length > 1)
+                                    nutritionInfo.Serving = temp[1];
+                                else
+                                    nutritionInfo.Serving = "N/A";
+
+                                nutritionInfo.Calories = reader.GetString(1);
                                 nutritionInfo.Total_Fat = reader.GetDouble(2);
-                                nutritionInfo.Total_Carbo_hydrate= reader.GetInt32(3);
-                                nutritionInfo.Sugars= reader.GetInt32(4);
-                                nutritionInfo.Protein= reader.GetInt32(5);
-                                nutritionInfo.Vitamin_A= reader.GetInt32(6);
-                                nutritionInfo.Vitamin_C= reader.GetInt32(7);
-                                nutritionInfo.Iron= reader.GetInt32(8);
-                                nutritionInfo.Food_Type= reader.GetString(9);
+                                nutritionInfo.Total_Carbo_hydrate= reader.GetByte(3);
+                                nutritionInfo.Sugars= reader.GetByte(4);
+                                nutritionInfo.Protein= reader.GetByte(5);
+                                nutritionInfo.Vitamin_A= reader.GetByte(6);
+                                nutritionInfo.Vitamin_C= reader.GetByte(7);
+                                nutritionInfo.Iron= reader.GetByte(8);
+                                temp = reader.GetString(9).Split(new char[]{',', ' '});
+                                nutritionInfo.Food_Type= temp[0];
 
                                 foodList.Add(nutritionInfo);
 
@@ -61,14 +66,14 @@ namespace Nutrition_App.Pages.Food
         public string Food { get; set; } = "";
         public string Serving { get; set; } = "";
         public string Food_Type { get; set; } = "";
-        public int Calories { get; set; }
+        public string Calories { get; set; } = "";
         public double Total_Fat { get; set; }
-        public int Total_Carbo_hydrate { get; set; }
-        public int Sugars { get; set; }
-        public int Protein { get; set; }
-        public int Vitamin_A { get; set; }
-        public int Vitamin_C { get; set; }
-        public int Iron { get; set; }
+        public byte Total_Carbo_hydrate { get; set; }
+        public byte Sugars { get; set; }
+        public byte Protein { get; set; }
+        public byte Vitamin_A { get; set; }
+        public byte Vitamin_C { get; set; }
+        public byte Iron { get; set; }
 
 
     }
