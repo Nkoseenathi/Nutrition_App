@@ -61,7 +61,7 @@ namespace Nutrition_App.Pages.Food
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@Food_and_Serving",Food
-                        +" "+Serving);
+                        +","+Serving);
                         command.Parameters.AddWithValue("@Calories",Calories);
                         command.Parameters.AddWithValue("@Total_Fat",Total_Fat);
                         command.Parameters.AddWithValue("@Total_Carbo_hydrate",Total_Carbo_hydrate);
