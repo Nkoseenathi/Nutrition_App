@@ -5,9 +5,12 @@
 }
 
 <div class="row">
+    <! --add column that has border and will be displayed at the center of the page-->
 
         <div class="col-md-8 mx-auto rounded border p-4">
             <h2 class="text-center mb-5"> Add new food </h2>
+
+            <! --If there is an error while creating the food item it will be displayed using an alert of type danger-->
 
             @if(Model.ErrorMessage.Length>0){
 
@@ -17,7 +20,11 @@
                 </div>
             }
                
-            
+            <! --Inside the column there's a form that will be submitted using the post method-->
+            <! --The form contains  labels displaying the corresponding properties-->
+            <! --An input field that is also bound to a property-->
+            <! --A span for displaying a validation error-->
+            <! --A submit and a cancel button-->
             <form method="post">
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">Food*</label>

@@ -4,12 +4,15 @@
     ViewData["Title"] = "Index";
 }
 
-<h2 class="text-center mb-3">Food list</h2>
+<h2 class="text-center mb-3">Food list</h2><! --Page heading which will be displayed in the center-->
 
-<a class="btn btn-primary mb-3" href="/Food/Create">Add new food</a>
+<a class="btn btn-primary mb-3" href="/Food/Create">Add new food</a><! --Button for opening the create page-->
+
+<! --Table for displaying the database item-->
 <table class="table">
 <thead>
 <tr>
+    <! --Table columns
     <th>Food</th>
     <th>Type</th>
     <th>Serving</th>
@@ -24,7 +27,7 @@
     <th>Action</th>  
 </tr>
 </thead>
-
+<! --Data that will be displayed in the table-->
 <tbody>
 @foreach(var food in Model.foodList){
     <tr>
@@ -40,8 +43,8 @@
 <td>@food.Vitamin_C</td>
 <td>@food.Iron</td>
 <td style="white-space:nowrap">
-<a class="btn btn-primary btn-sm" href="/Food/edit?name=@food.Food">Edit</a>
-<a class="btn btn-danger btn-sm " href="/Food/delete?name=@food.Food">Delete</a>
+<a class="btn btn-primary btn-sm" href="/Food/edit?name=@food.Food">Edit</a><! -- edit button that will open the edit page it will also provide the page with the food name parameter-->
+<a class="btn btn-danger btn-sm " href="/Food/delete?name=@food.Food">Delete</a> <! -- delete button that will open the delete page it will also provide the page with the food name parameter-->
 <td>
     </tr>
 }

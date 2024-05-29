@@ -11,26 +11,23 @@ namespace Nutrition_App.Pages.Food
 {
     public class Delete : PageModel
     {
-        private readonly ILogger<Delete> _logger;
-
-        public Delete(ILogger<Delete> logger)
-        {
-            _logger = logger;
-        }
 
         public void OnGet()
         {
         }
+        //Get parameter from url
         public void OnPost(String name)
         {
-            deleteFood(name);
-            Response.Redirect("/Food/Index");
+            DeleteFood(name);//Delete food item
+            Response.Redirect("/Food/Index");// redirect the user to the index page
         }
 
-        private void deleteFood(String name){
-try
-{
-                    string connString = "Server=.;Database=nutrition;Trusted_Connection=True;TrustServerCertificate=True;";
+        // Connect to the database and delete the food item provided in the url using the delete statement
+        private static void DeleteFood(String name)
+        {
+            try
+            {
+                string connString = "Server=.;Database=nutrition;Trusted_Connection=True;TrustServerCertificate=True;";
                 using (SqlConnection connection = new SqlConnection(connString))
                 {
 
@@ -38,19 +35,19 @@ try
                     String sql = "Delete from nutrition where Food_and_Serving = " + name;
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
-                    { 
-                    command.ExecuteNonQuery();
+                    {
+                        command.ExecuteNonQuery();
 
 
                     }
                 }
 
-}
-catch (System.Exception)
-{
-    
-    throw;
-}
+            }
+            catch (Exception e)
+            {
+                
+                Console.WriteLine("Cannot delete customer: " + e);
+            }
 
         }
     }

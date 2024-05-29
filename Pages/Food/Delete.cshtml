@@ -6,12 +6,19 @@
 
 <h1>@ViewData["Title"]</h1>
 
+<! --Display a comformation message to the user-->
 <div class="mx-auto rounded border p-4" style="width: 400px;">
+    <! --page title-->
     <h2 class="text-center mb-3">Delete food item</h2>
     <hr />
-    <p>Are you sure you want to delete this food item</p>
-    <p>Food Name = @Request.Query["name"]</p>
+
+    <p>Are you sure you want to delete this food item</p><! --comformation message-->
+    <p>Food Name = @Request.Query["name"]</p><! -- get name from url-->
     <hr />
+    <! --form for submiting a post request-->
+    <! --contains two buttons-->
+    <! -- Delete button which will submit the form-->
+    <! --Cancel button which will redirect the user to the index page-->
     <form method="post">
         <div class="row">
             <div class="col-sm-6 d-grid">
@@ -19,7 +26,7 @@
             </div>
 
             <div class="col-sm-6 d-grid">
-                <a class="btn btn-outline-danger" href="/Food/Index">Cancel</a>
+                <a class="btn btn-outline-danger" href="/Food/Index">Cancel</a><! --Redirect the user to the index page-->
 
             </div>
         </div>

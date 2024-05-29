@@ -12,6 +12,9 @@ namespace Nutrition_App.Pages.Food
 {
     public class Create : PageModel
     {
+        // properties for creating a new food item
+        //Associate the properties to the form by binding them
+        //Add an error message that will be displayed if the field is not provided
         [BindProperty, Required(ErrorMessage ="This field is required")]
         public string Food { get; set; } = "";
         [BindProperty, Required(ErrorMessage ="This field is required")]
@@ -40,7 +43,7 @@ namespace Nutrition_App.Pages.Food
         public void OnPost()
         { 
 
-            
+            //Check if the submitted data is valid
             if(!ModelState.IsValid){
                 return;
             }
@@ -48,7 +51,10 @@ namespace Nutrition_App.Pages.Food
             //Create new food item
             try
             {
+                //Create a connection string
                 string connString = "Server=.;Database=nutrition;Trusted_Connection=True;TrustServerCertificate=True;";
+               
+               //Connect to the database and Insert the new Item using the insert satement
                 using (SqlConnection connection = new SqlConnection(connString))
                 {
 
@@ -79,10 +85,11 @@ namespace Nutrition_App.Pages.Food
             }
             catch (Exception e)
             {
-                
+                //if there is an error message store it and it will be displayed in user interface
                 ErrorMessage = e.ToString();
                 return;
             }
+            //After creating the item redirect to the index page
             Response.Redirect("/Food/Index");
         }
     }

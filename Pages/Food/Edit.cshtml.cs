@@ -12,6 +12,9 @@ namespace Nutrition_App.Pages.Food
 {
     public class Edit : PageModel
     {
+        //Create properties for creating a new food item 
+        //Associate the properties to the form by binding them
+        //Add an error message that will be displayed if the field is not provided
         [BindProperty, Required(ErrorMessage = "This field is required")]
         public string Food { get; set; } = "";
         [BindProperty, Required(ErrorMessage = "This field is required")]
@@ -36,8 +39,10 @@ namespace Nutrition_App.Pages.Food
         public byte Iron { get; set; }
         public string ErrorMessage { get; set; } = "";
 
+        //Read the name parameter from the url
         public void OnGet(string name)
         {
+            //Connect to the database and retrieve the details of the food provided in the url
             try
             {
 
@@ -78,6 +83,7 @@ namespace Nutrition_App.Pages.Food
                             }
                             else
                             {
+                                //if the food does not exist redirect the user to the index page
                                 Response.Redirect("/Food/Index");
                             }
                         }
@@ -88,47 +94,56 @@ namespace Nutrition_App.Pages.Food
             catch (Exception e)
             {
 
-                throw;
+                ErrorMessage = e.ToString();
             }
         }
         public void OnPost()
         {
 
-
+            //Check if the submitted data is valid
             if (!ModelState.IsValid)
             {
                 return;
             }
 
 
-
-            string connString = "Server=.;Database=nutrition;Trusted_Connection=True;TrustServerCertificate=True;";
-            using (SqlConnection connection = new SqlConnection(connString))
+            // Connect to the database and update the food item using the update statement 
+            try
             {
-
-                connection.Open();
-                String sql = "UPDATE NUTRITION SET "
-                + "Food_and_Serving=@Food_and_Serving, Calories=@Calories, Total_Fat=@Total_Fat, Total_Carbo_hydrate=@Total_Carbo_hydrate, Sugars=@Sugars, Protein=@Protein, Vitamin_A=@Vitamin_A,Vitamin_C=@Vitamin_C, Iron=@Iron, Food_Type=@Food_Type"
-                + " where Food_and_Serving like '%" + Food + "%'";
-
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                string connString = "Server=.;Database=nutrition;Trusted_Connection=True;TrustServerCertificate=True;";
+                using (SqlConnection connection = new SqlConnection(connString))
                 {
-                    command.Parameters.AddWithValue("@Food_and_Serving", Food
-                    + "," + Serving);
-                    command.Parameters.AddWithValue("@Calories", Calories);
-                    command.Parameters.AddWithValue("@Total_Fat", Total_Fat);
-                    command.Parameters.AddWithValue("@Total_Carbo_hydrate", Total_Carbo_hydrate);
-                    command.Parameters.AddWithValue("@Sugars", Sugars);
-                    command.Parameters.AddWithValue("@Protein", Protein);
-                    command.Parameters.AddWithValue("@Vitamin_A", Vitamin_A);
-                    command.Parameters.AddWithValue("@Vitamin_C", Vitamin_C);
-                    command.Parameters.AddWithValue("@Iron", Iron);
-                    command.Parameters.AddWithValue("@Food_Type", Food_Type);
 
-                    command.ExecuteNonQuery();
-                    Response.Redirect("/Food/Index");
+                    connection.Open();
+                    String sql = "UPDATE NUTRITION SET "
+                    + "Food_and_Serving=@Food_and_Serving, Calories=@Calories, Total_Fat=@Total_Fat, Total_Carbo_hydrate=@Total_Carbo_hydrate, Sugars=@Sugars, Protein=@Protein, Vitamin_A=@Vitamin_A,Vitamin_C=@Vitamin_C, Iron=@Iron, Food_Type=@Food_Type"
+                    + " where Food_and_Serving like '%" + Food + "%'";
 
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@Food_and_Serving", Food
+                        + "," + Serving);
+                        command.Parameters.AddWithValue("@Calories", Calories);
+                        command.Parameters.AddWithValue("@Total_Fat", Total_Fat);
+                        command.Parameters.AddWithValue("@Total_Carbo_hydrate", Total_Carbo_hydrate);
+                        command.Parameters.AddWithValue("@Sugars", Sugars);
+                        command.Parameters.AddWithValue("@Protein", Protein);
+                        command.Parameters.AddWithValue("@Vitamin_A", Vitamin_A);
+                        command.Parameters.AddWithValue("@Vitamin_C", Vitamin_C);
+                        command.Parameters.AddWithValue("@Iron", Iron);
+                        command.Parameters.AddWithValue("@Food_Type", Food_Type);
+
+                        command.ExecuteNonQuery();
+                        Response.Redirect("/Food/Index");
+
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                //if there is an error message store it and it will be displayed in the page
+
+                ErrorMessage = e.ToString();
             }
         }
     }
